@@ -8,30 +8,30 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
-public class FirebaseController {
+public class DatabaseController {
+    private static DatabaseController ourInstance = new DatabaseController();
+
+    public static DatabaseController getInstance() {
+        return ourInstance;
+    }
 
     private FirebaseDatabase database;
+
     private DatabaseReference ref;
 
-    public FirebaseController() {
+    private DatabaseController() {
         initializeFirebase();
-        List<Integer> tempgroups = new ArrayList<>();
-        tempgroups.add(1);
-        tempgroups.add(3);
-        tempgroups.add(5);
-        addUser(new User("Juulis", "1337", tempgroups));
     }
 
-    public void addUser(User user) {
-        DatabaseReference usersRef = ref.child("users");
-        usersRef.child(user.getId()).setValueAsync(user);
-            System.out.println("added user");
+    public void sendToDb(Object obj, String dbrefString) {
+        DatabaseReference dbref = ref.child(dbrefString);
+        System.out.println(dbrefString);
+        dbref.setValueAsync(obj);
     }
 
-    public void initializeFirebase() {
+    private void initializeFirebase() {
 
         try {
 
@@ -44,13 +44,13 @@ public class FirebaseController {
                     .build();
 
             FirebaseApp.initializeApp(options);
-            System.out.println("connected to firebase");
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("can't connect to db");
         }
         database = FirebaseDatabase.getInstance();
         ref = database.getReference();
 
     }
+
 }
