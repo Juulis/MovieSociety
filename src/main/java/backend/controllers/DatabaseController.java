@@ -1,11 +1,12 @@
 package backend.controllers;
 
+import backend.entities.Movie;
 import backend.entities.User;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -27,8 +28,29 @@ public class DatabaseController {
 
     public void sendToDb(Object obj, String dbrefString) {
         DatabaseReference dbref = ref.child(dbrefString);
-        System.out.println(dbrefString);
         dbref.setValueAsync(obj);
+    }
+
+
+    public Movie[] fetchMovies(String search) {
+        RestTemplate restTemplate = new RestTemplate();
+        String call = String.format("https://moviesociety-88142.firebaseio.com/search/%s.json", search);
+        Movie[] response = restTemplate.getForObject(call, Movie[].class);
+        if (response != null) {
+            return response;
+        }
+        return null;
+    }
+
+    public String fetchPw(String username) {
+        RestTemplate restTemplate = new RestTemplate();
+        String call = String.format("https://moviesociety-88142.firebaseio.com/users/%s.json", username);
+        User userResponse = restTemplate.getForObject(call, User.class);
+        if (userResponse == null) {
+            return null;
+        }
+
+        return userResponse.getPw();
     }
 
     private void initializeFirebase() {
@@ -52,5 +74,4 @@ public class DatabaseController {
         ref = database.getReference();
 
     }
-
 }

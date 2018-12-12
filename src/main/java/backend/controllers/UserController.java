@@ -20,14 +20,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "/adduser")
-    public User adduser(@RequestParam("name") String name, @RequestParam("id") String id, @RequestParam(value = "pw", defaultValue = "1337") String pw) {
-        User user = new User(name, id, null, createPw(pw));
-        String dbPath = "users/" + user.getId();
+    public User adduser(@RequestParam("name") String name, @RequestParam(value = "pw", defaultValue = "1337") String pw) {
+        User user = new User(name, null, createPw(pw));
+        String dbPath = "users/" + user.getName();
         DatabaseController.getInstance().sendToDb(user, dbPath);
         return user;
     }
 
-    public String createPw(String pw){
+    public String createPw(String pw) {
         KeySpec spec = new PBEKeySpec(pw.toCharArray(), salt, 65536, 512);
         SecretKeyFactory f = null;
         try {
@@ -47,6 +47,21 @@ public class UserController {
         System.out.println();
 
         return enc.encodeToString(hash);
+    }
+
+    @RequestMapping("/login")
+    public String login(@RequestParam("name") String name, @RequestParam("pw") String pw) {
+        if (Authorize(name, pw))
+            return "logged in";
+        return "Not authorized";
+    }
+
+    public boolean Authorize(String username, String pw) {
+        String pwFromDb = DatabaseController.getInstance().fetchPw(username);
+        pw = createPw(pw);
+        if (pw.equals(pwFromDb))
+            return true;
+        return false;
     }
 
 }

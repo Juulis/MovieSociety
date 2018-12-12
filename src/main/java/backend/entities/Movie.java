@@ -1,13 +1,8 @@
 package backend.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class Movie {
-    @JsonProperty("Title")
     private String title;
-    @JsonProperty("Released")
     private String released;
-    @JsonProperty("Genre")
     private String genre;
 
     public Movie(String title, String released, String genre) {
