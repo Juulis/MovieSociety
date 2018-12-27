@@ -9,4 +9,10 @@ public class MovieFromOMDB extends Movie {
     private String released;
     @JsonProperty("Genre")
     private String genre;
+    @JsonProperty("imdbID")
+    private String id;
+    @JsonProperty("Plot")
+    private String descr;
+    @JsonProperty("Poster")
+    private String poster;
 }

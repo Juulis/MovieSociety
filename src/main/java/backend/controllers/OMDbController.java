@@ -19,11 +19,15 @@ public class OMDbController {
     }
 
     @RequestMapping("/api/movie")
-    public MovieFromOMDB findMovieById(@RequestParam(value = "id") String id) {
+    public Movie findMovieById(@RequestParam(value = "id") String id) {
         RestTemplate restTemplate = new RestTemplate();
         String call = String.format("http://www.omdbapi.com/?i=%s&apikey=a5fc9d5d", id);
         //check if call exists in db, then get data from db instead.
-//        DatabaseController.getInstance().checkForItem();
+//        MovieFromOMDB movie = DatabaseController.getInstance().fetchMovie();
+//        if(movie != null){
+//            System.out.println("found movie");
+//            return movie;
+//        }
         return restTemplate.getForObject(call, MovieFromOMDB.class);
     }
 
@@ -46,5 +50,4 @@ public class OMDbController {
             return movielist.getSearchArray();
         }
     }
-
 }

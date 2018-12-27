@@ -7,7 +7,6 @@
     <artifactId>MovieSociety</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -26,16 +25,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <scope>test</scope>
-        </dependency>
 
         <dependency>
             <groupId>com.google.firebase</groupId>
@@ -44,23 +33,42 @@
         </dependency>
 
         <dependency>
-            <groupId>com.google.apis</groupId>
-            <artifactId>google-api-services-calendar</artifactId>
-            <version>v3-rev224-1.22.0</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet.jsp.jstl</groupId>
+            <artifactId>javax.servlet.jsp.jstl-api</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>1.27.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.google.apis</groupId>
-            <artifactId>google-api-services-sqladmin</artifactId>
-            <version>v1beta4-rev66-1.25.0</version>
+            <artifactId>google-api-services-calendar</artifactId>
+            <version>v3-rev364-1.25.0</version>
         </dependency>
+
 
     </dependencies>
 
     <properties>
+        <spring.version>5.1.2.RELEASE</spring.version>
         <java.version>11</java.version>
     </properties>
-
 
     <build>
         <plugins>
